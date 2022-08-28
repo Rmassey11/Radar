@@ -55,17 +55,70 @@
         <div class="row row-cols-1 row-cols-lg-2">
             <div class="col-lg-8">
                 <pre class="line-numbers"><code class="language-javascript">
-                    //Call Hello World
-                    function HelloWorld(){
-                        alert("Hello World");
+                    //Get values from page
+                    function getPalindrome(){
+                        document.getElementById("alert").classList.add("invisible");
+                        let pageValues = document.getElementById("userPalindrome").value;
+                        let returnObj = revPalindrome(pageValues);
+                        displayPalindrome(returnObj);
+                        }
+
+                    //Reverse the values
+                    function revPalindrome(pageValues){
+                        pageValues = pageValues.toLowerCase();
+                        let regex = /[^a-z0-9]/gi;
+                        pageValues = pageValues.replace(regex,"");
+                        let revPalindrome = [];
+                        let returnObj = {};
+                        for(let index = pageValues.length - 1; index >=0; index--){
+                            revPalindrome += pageValues[index];
+                        }
+                        if(revPalindrome == pageValues){
+                            returnObj.msg = "Well done! You enetered a Palindrome"
+                        }
+                        else{
+                            returnObj.msg = "Sorry! You did not enter a palindrome."
+                        }
+                        returnObj.reversed = revPalindrome;
+                        return returnObj;
+                    }
+
+                    //Display success and reversed values
+                    function displayPalindrome(returnObj){
+                        document.getElementById("alertHeader").innerHTML = returnObj.msg;
+                        document.getElementById("msg").innerHTML = `Your Phrase reversed is: ${returnObj.reversed}`;
+                        document.getElementById("alert").classList.remove("invisible");
                     }
                 </code>
                 </pre>
             </div>
             <div class="col-lg-4">
-                <p>The Code is structured in one function.</p>
-                <h5>Hello World</h5>
-                <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                <p>The Code is structured in three functions.</p>
+                <h5>getPalindrome</h5>
+                <p>The <span class="boldGold">getPalindrome</span> function retrieves the entered word or phrase from the page for use
+                    in our other functions. First we set our alert window to invisible to make sure it is
+                    not seen until the app runs. We then declare a variable <span class="var">pageValues</span> and set it to the values entered by the user.
+                    Next we declare another variable <span class="var">returnObj</span> and set it to the value returned by the <span class="boldGold">revPalindrome</span>
+                    function. Finally we pass the <span class="var">returnObj</span>, which will be an <span class="bold">Object</span> at this point, to our <span class="boldGold">displayPalindrome</span> function.
+                </p>
+                <h5>revPalindrome</h5>
+                <p>The <span class="boldGold">revPalindrome</span> function takes the <span class="var">pageValues</span> gathered by our <span class="boldGold">getPalindrome</span> function, converts all letters to lower case,
+                    removes all special characters and spaces, reverses the remaining characters, and finally checks to see if the entered value 
+                    is a palindrome. To start we take our <span class="var">pageValues</span> and use the <span class="bold">toLowerCase</span> method to make all letters lower case. Next by using 
+                    a <span class="bold">Regular Expression</span> we confirm that all letters or numbers are lower case or numbers and remove all other characters. Then
+                    we declare the <span class="var">revPalindrome</span> variable and set it to an empty array and another variable <span class="var">returnObj</span> which is set to an empty <span class="bold">object</span>.
+                    Next we run a for loop through our pageValues string starting at the end and looping until we reach the beginning. At each iteration
+                    of our loop we add the value at each index to our <span class="var">revPalindrome</span> array. Finally we check if our new <span class="var">revPalindrome</span> array is equal to the
+                    <span class="var">pageValues</span> array. If it is we set our <span class="var">returnObj.msg</span> to a success message. If not then <span class="var">returnObj.msg</span> is set to a failure message.
+                    We then set <span class="var">returnObj.reversed</span> to equal our new <span class="var">revPalindrome</span> array and return the <span class="var">returnObj</span> variable to <span class="boldGold">getPalindrome</span> which is an object 
+                    containing our <span class="var">revPalindrome</span> array as well as the correct message depending on the results.
+                </p>
+                <h5>displayPalindrome</h5>
+                <p>The <span class="boldGold">displayPalindrome</span> function takes the object returned from the <span class="boldGold">revPalindrome</span> function and displays both the success/fail message and the reversed
+                    value contained within it. First we target our <span class="bold">alertHeader</span> from our app.html page and using <span class="bold">innerHTML</span> we set it to our success/fail message attatched to
+                    the <span class="var">returnObj</span> variable. Next we target the <span class="bold">msg</span> Id from the app.html page which is where our message content will go. Using <span class="bold">innerHTML</span> we set that to display our
+                    reversed phrase. Finally we target the entire alert system from app.html and remove the "invisible" class attatched at the beginning so that the content can be displayed.
+                </p>
             </div>
         </div>
     </div>
